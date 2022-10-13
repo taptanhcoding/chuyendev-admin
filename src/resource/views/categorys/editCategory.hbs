@@ -1,0 +1,42 @@
+<h1 class="tittle">Cập nhật category</h1>
+<form method="POST" enctype="multipart/form-data" action="/category/edit/{{category.slug}}?_method=PUT">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Category</label>
+    <input
+      name="name"
+      type="text"
+      class="form-control"
+      id="exampleInputEmail1"
+      value="{{category.name}}"
+      aria-describedby="emailHelp"
+      required
+    />
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlFile1">Example file input</label>
+    <input name="icon" type="file" class="form-control-file" id="exampleFormControlFile1">
+    <input name="old_icon"  value="{{category.icon}}" hidden>
+  </div>
+  <div class="preview-img-old">
+      <img src="{{category.icon}}" />
+  </div>
+  <div class="preview-img">
+  </div>
+  <button type="submit" class="btn btn-primary">Cập nhật</button>
+</form>
+
+<script>
+  const inputImg = document.querySelector('input[name="icon"]');
+  const divPreview = document.querySelector('.preview-img')
+  const divPreviewOld = document.querySelector('.preview-img-old')
+  let img = document.createElement('img')
+  inputImg.onchange = e => {
+    divPreviewOld.innerHTML=''
+    const [file] = inputImg.files
+    console.log(file)
+    if(file) {
+        img.src = URL.createObjectURL(file)
+        divPreview.appendChild(img)
+    }
+  }
+</script>

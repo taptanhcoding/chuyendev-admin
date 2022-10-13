@@ -1,0 +1,27 @@
+<div>
+    <h1>Quản lý category đã xóa</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Icon</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each categorys}}
+        <tr>
+          <td>{{this.name}}</td>
+          <td><img class="category-img" src='{{this.icon}}'/></td>
+          <td>
+            <a type="button" class="btn btn-info" href="/category/restore/{{this.slug}}">Khôi phục</a>
+            <a type="button" class="btn btn-danger" href="/category/destroy/{{this.slug}}">xóa</a>
+          </td>
+        </tr>
+        {{else}}
+         <tr><td colspan="5" class="text-center"><p>thùng rác trống,<a href='/category/list?page=1'>quay lại ? </a></p></td></tr>
+        
+        {{/each}}
+      </tbody>
+    </table>
+</div>

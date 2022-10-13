@@ -1,0 +1,38 @@
+<div>
+  <h1>Quản lý người dùng</h1>
+  <a href="/customer/deleteList?page=1">có {{countDeleted}} category đã xóa</a>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Email</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each data}}
+        <tr>
+          <td>{{this.email}}</td>
+          <td>{{this.active}}</td>
+          <td>
+            <a
+              type="button"
+              class="btn btn-danger"
+              href="/customer/delete/{{this._id}}"
+            >Xóa(tất cả product sẽ ko hiển thị trên ui)</a>
+            {{#unless this.active }}
+            <a
+              type="button"
+              class="btn btn-info"
+              href="/customer/active/{{this._id}}"
+            >    
+            kích hoạt</a>
+
+            {{/unless}}
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  {{{paging total_pages "/customer/usered"}}}
+</div>

@@ -1,0 +1,43 @@
+@import 'react-quill/dist/quill.snow.css';
+
+
+.home-title {
+    color: red;
+    font-size: 18px;
+}
+
+.preview-img,.preview-img-old {
+    width: 100%;
+    & img {
+        width: 100px;
+        object-fit: contain;
+    }
+}
+
+.category-img {
+    width: 50px;
+    object-fit: contain;
+}
+
+.fr-box.fr-basic .fr-element {
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.wrapper-paging {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    & a {
+        display: block;
+        color: #000;
+        width: 30px;
+        font-size: 16px;
+        line-height: 40px;
+        text-align: center;
+        height: 40px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,36 @@
+<div>
+  <h1>Quản lý đặt hàng</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Tên khách hàng</th>
+        <th scope="col">Đơn hàng</th>
+        <th scope="col">Tổng tiền</th>
+        <th scope="col">Tình trạng</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each data}}
+        <tr>
+          <td>{{this.name}}</td>
+          <td><img class="category-img" src="{{this.icon}}" /></td>
+          <td>
+            <a
+              type="button"
+              class="btn btn-danger"
+              href="/category/delete/{{this.slug}}"
+            >Xóa(tất cả product sẽ ko hiển thị trên ui)</a>
+            <a
+              type="button"
+              class="btn btn-info"
+              href="/category/edit/{{this.slug}}"
+            >Sửa</a>
+          </td>
+        </tr>
+        {{else}}
+        <tr><td colspan="4" class="text-center"> Chưa có đơn hàng nào đã được đặt!</td></tr>
+      {{/each}}
+    </tbody>
+  </table>
+  {{{paging total_pages "/cart-admin/handleCart"}}}
+</div>

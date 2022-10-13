@@ -1,0 +1,31 @@
+<h1 class="title">Danh sách  {{total}} sản phẩm</h1>
+    <a href="/product/deleted">có {{countDeleted}} category đã xóa</a>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Category</th>
+      <th scope="col">action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+    <tr>
+      <th scope="row">{{this.id}}</th>
+      <td>{{this.name}}</td>
+      <td>{{this.categories}}</td>
+      <td>
+        <a href="/product/{{this.id}}/delete" type="button" class="btn btn-danger">Xóa</a>
+        <a href="/product/edit/{{this.id}}" type="button" class="btn btn-info">Sửa</a>
+        </td>
+    </tr>
+    {{else}}
+    <tr>
+      <td colspan="4" class="text-center"> chưa có sản phẩm nào! <a href="/product/add">Thêm ?</a></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+{{{paging total_pages '/product/list'}}}

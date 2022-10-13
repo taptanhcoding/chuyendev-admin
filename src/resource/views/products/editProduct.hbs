@@ -1,0 +1,79 @@
+<div class="wrapper-product">
+  <h1 class="title">Sửa thông tin sản phẩm </h1>
+  <form  enctype="multipart/form-data" method="POST" action="/product/edit/{{product.id}}?_method=PUT">
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Tên sản phẩm*</label>
+    <input value="{{product.name}}" required name="name" type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlInput2">giới thiệu sản phẩm *</label>
+    <input value="{{product.info}}" required name="info" type="text" class="form-control" id="exampleFormControlInput2" placeholder="">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Danh mục*</label>
+    <select name = 'categories' class="form-control" id="exampleFormControlSelect1">
+      {{{selectedChoose product.categories categories}}}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlInput3">Giá sản phẩm(đv: nghìn đồng)*</label>
+    <input value="{{product.price}}" required name="price" type="number" class="form-control" id="exampleFormControlInput3" placeholder="name@example.com">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlInput4">Giá khuyến mãi(đv: nghìn đồng)</label>
+    <input value="{{product.new_price}}" name="new_price" type="number" class="form-control" id="exampleFormControlInput4" placeholder="name@example.com">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlFile1">Thêm ảnh sản phẩm*</label>
+    <input name="image" type="file" class="form-control-file" id="exampleFormControlFile1" multiple>
+    <input name="old_image" value="{{product.image}}" hidden/>
+  </div>
+  <div class="preview-img-old">
+      {{{oldImage product.image}}}
+  </div>
+
+  <div class="preview-img">
+
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlFile2">Màu sản phẩm (nếu nhiều màu, cách nhau bằng dấu ";")</label>
+    <input value="{{arrayToString product.color}}" name="color" type="text" class="form-control-file" id="exampleFormControlFile2">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlFile3">Số lượng *</label>
+    <input value="{{product.amount}}" name="amount" type="text" class="form-control-file" id="exampleFormControlFile3">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Mô tả sản phẩm*</label>
+    <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    <input name="old_description" value="{{product.description}}" hidden/>
+  </div>
+  <button type="submit" class="btn btn-info">Cập nhật sản phẩm</button>
+</form>
+
+</div>
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"
+></script>
+<script>
+  new FroalaEditor('textarea');
+</script>
+<script>
+  const imgInput = document.querySelector("input[name='image']")
+  const divPreview = document.querySelector('div.preview-img')
+  const divPreviewOld = document.querySelector('div.preview-img-old')
+  console.log(imgInput)
+  imgInput.onchange = e => {
+    divPreviewOld.innerHTML = ''
+    const file = imgInput.files
+    if(file) {
+     Array.from(file).forEach(fil => {
+        console.log(fil)
+        let imgElement = document.createElement('img')
+        imgElement.src = URL.createObjectURL(fil)
+        divPreview.appendChild(imgElement)
+      })
+    }
+  }
+</script>

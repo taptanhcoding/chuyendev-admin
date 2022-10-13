@@ -1,0 +1,35 @@
+<form method="POST" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Category</label>
+    <input
+      name="name"
+      type="text"
+      class="form-control"
+      id="exampleInputEmail1"
+      aria-describedby="emailHelp"
+    />
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlFile1">Example file input</label>
+    <input name="icon" type="file" class="form-control-file" id="exampleFormControlFile1">
+  </div>
+
+  <div class="preview-img">
+
+  </div>
+  <button type="submit" class="btn btn-primary">Thêm</button>
+</form>
+
+<script>
+  const inputImg = document.querySelector('input[name="icon"]');
+  const divPreview = document.querySelector('.preview-img')
+  let img = document.createElement('img')
+  inputImg.onchange = e => {
+    const [file] = inputImg.files
+    console.log(file)
+    if(file) {
+        img.src = URL.createObjectURL(file)
+        divPreview.appendChild(img)
+    }
+  }
+</script>

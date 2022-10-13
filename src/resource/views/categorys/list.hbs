@@ -1,0 +1,34 @@
+<div>
+  <h1>Quản lý category</h1>
+  <a href="/category/deleteList">có {{countDeleted}} category đã xóa</a>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Icon</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each data}}
+        <tr>
+          <td>{{this.name}}</td>
+          <td><img class="category-img" src="{{this.icon}}" /></td>
+          <td>
+            <a
+              type="button"
+              class="btn btn-danger"
+              href="/category/delete/{{this.slug}}"
+            >Xóa(tất cả product sẽ ko hiển thị trên ui)</a>
+            <a
+              type="button"
+              class="btn btn-info"
+              href="/category/edit/{{this.slug}}"
+            >Sửa</a>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  {{{paging total_pages "/category/list"}}}
+</div>

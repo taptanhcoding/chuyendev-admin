@@ -1,0 +1,46 @@
+{
+  "name": "admin-shop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --inspect ./src/index.js localhost 4000",
+    "watch": "node-sass --watch src/resource/scss/ -o src/public/css/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "app-root-path": "^3.1.0",
+    "cookie-parser": "1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.1",
+    "express-handlebars": "^6.0.6",
+    "froala-editor": "^4.0.14",
+    "http-errors": "^2.0.0",
+    "jsonwebtoken": "8.5.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^6.6.1",
+    "mongoose-delete": "^0.5.4",
+    "mongoose-sequence": "^5.3.1",
+    "mongoose-slug-generator": "^1.0.4",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.8.0",
+    "react-quill": "^2.0.0",
+    "rootpath": "^0.1.2",
+    "swagger-express-router": "^1.0.0",
+    "swagger-jsdoc": "^6.2.5",
+    "swagger-ui": "^4.14.2",
+    "swagger-ui-express": "^4.5.0",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "morgan": "^1.10.0",
+    "node-sass": "^7.0.3",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.7.1"
+  }
+}

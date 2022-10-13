@@ -1,0 +1,25 @@
+<h1 class="title">Danh sách  {{total}} sản phẩm</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Category</th>
+      <th scope="col">action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+    <tr>
+      <th scope="row">{{this.id}}</th>
+      <td>{{this.name}}</td>
+      <td>{{this.categories}}</td>
+      <td>
+        <a href="/product/{{this.id}}/destroy" type="button" class="btn btn-danger">Xóa</a>
+        <a href="/product/{{this.id}}/restore" type="button" class="btn btn-info">khôi phục</a>
+        </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+{{{paging total_pages}}}

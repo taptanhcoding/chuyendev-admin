@@ -1,0 +1,110 @@
+{
+  "info": {
+    "title": "ChuyenDev APi",
+    "version": "1.0.0",
+    "description": "A sample API"
+  },
+  "host": "localhost:4000",
+  "basePath": "/api",
+  "swagger": "2.0",
+  "paths": {
+    "/user/login": {
+      "get": {
+        "description": "Login to the application",
+        "tags": ["users"],
+        "produces": ["application/json"],
+        "requestBody" : {
+            "content" : {
+              
+            }
+        }
+        ,
+        "responses": {
+          "200": {
+            "description": "Đăng nhập tài khoản",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Login"
+            }
+          }
+        }
+      }
+    },
+    "/user/signin": {
+      "post": {
+        "description": "Login to the application",
+        "tags": ["users"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "$ref": "#/parameters/email"
+          },
+          {
+            "name": "password",
+            "description": "User's password.",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Đăng ký tài khoản",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Login"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Login": {
+      "required": ["username", "password"],
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "responses": {},
+  "parameters": {
+    "username": {
+      "name": "username",
+      "description": "Username to use for login.",
+      "in": "formData",
+      "required": true,
+      "type": "string"
+    },
+    "email": {
+      "name": "email",
+      "description": "Email to use for login.",
+      "in": "formData",
+      "required": true,
+      "type": "string"
+    }
+  },
+  "securityDefinitions": {},
+  "tags": [
+    {
+      "name": "users",
+      "description": "User management and login"
+    },
+    {
+      "name": "product",
+      "description": "Login"
+    },
+    {
+      "name": "cart",
+      "description": "Accounts"
+    }
+  ]
+}
