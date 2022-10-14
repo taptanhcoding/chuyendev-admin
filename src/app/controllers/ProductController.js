@@ -10,7 +10,7 @@ require("dotenv").config();
 class ProductController {
   //[GET] /product/add
   index(req, res, next) {
-    Category.find().lean()
+    Category.find()
       .then((categories) =>
         res.render("products/add", {
           categories: multipleMongooseToObject(categories),
