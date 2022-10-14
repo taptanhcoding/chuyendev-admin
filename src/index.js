@@ -15,7 +15,7 @@ const statusLogin = require('./app/middleware/JWTHandle')
 const routes = require("./routes");
 const db = require("./config/db");
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT;
 
 console.log(app);
 console.log(appRoot);
