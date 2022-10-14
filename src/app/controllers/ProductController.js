@@ -41,7 +41,7 @@ class ProductController {
   //[GET] /product/edit/:product_id
   editProduct(req, res, next) {
     Promise.all([
-      Product.findOne({ id: req.params.product_id }).lean(),
+      Product.findOne({ id: req.params.product_id }),
       Category.find({}),
     ])
       .then(([product, categories]) =>
@@ -139,6 +139,7 @@ class ProductController {
     Promise.all([Product.find().lean(), Product.count(), Product.countDeleted()])
       .then(([products, count, countDeleted]) => {
         let myProduct = paging(products, count, req.query.page);
+        console.log({ ...myProduct, countDeleted });
         res.render("products/list", { ...myProduct, countDeleted });
       })
       .catch((err) => console.log(err));
