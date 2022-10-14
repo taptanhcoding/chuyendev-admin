@@ -10,7 +10,7 @@ const { OrderConfirm } = require("../helpers/nodemailer");
 class CartController {
   //[GET] /cart-admin/handleCart?page=1
   listCart(req, res, next) {
-    Promise.all([Orders.find({status: false}), Orders.count({status: false})])
+    Promise.all([Orders.find({status: false}).lean(), Orders.count({status: false})])
       .then(([carts, count]) => {
         let page = req.params.page || 1;
         let pagingCart = paging(carts, count, page);
@@ -44,7 +44,7 @@ class CartController {
 
   //[GET] /cart-admin/listSuccess?page=1
   orderSucces(req, res, next) {
-    Promise.all([Orders.find({ status: true }), Orders.count({ status: true })])
+    Promise.all([Orders.find({ status: true }).lean(), Orders.count({ status: true })])
       .then(([carts, count]) => {
         let page = req.params.page || 1;
         let pagingCart = paging(carts, count, page);
@@ -57,7 +57,7 @@ class CartController {
   //[GET] /cart-admin/listFailer?page=1
   failerList(req, res, next) {
     Promise.all([
-      Orders.findDeleted({}),
+      Orders.findDeleted({}).lean(),
       Orders.countDeleted({}),
     ])
       .then(([carts, count]) => {

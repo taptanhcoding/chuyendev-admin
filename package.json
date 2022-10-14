@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@handlebars/allow-prototype-access": "^1.0.5",
     "app-root-path": "^3.1.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",

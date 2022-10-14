@@ -12,7 +12,7 @@ class CustomerController {
   //[GET] /customer/list?page=x
   listCustomer(req, res, next) {
     Promise.all([
-      Customer.find({}),
+      Customer.find({}).lean().lean(),
       Customer.count({}),
       Customer.countDeleted(),
     ])
@@ -106,7 +106,7 @@ class CustomerController {
 
   //[POST] /api/user/signin
   signin(req, res, next) {
-    Customer.findOne({ email: req.body.email })
+    Customer.findOne({ email: req.body.email }).lean()
       .then((customer) => {
         let oldCustomer = MongooseToObject(customer);
         if (oldCustomer) {

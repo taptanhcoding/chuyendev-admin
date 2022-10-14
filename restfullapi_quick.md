@@ -553,3 +553,7 @@ const cookieParser = require('cookie-parser')
 const app = express()
 //Khai báo sử dụng middleware cookieParse()
 app.use(cookieParser())
+
+
+## handlebars sẽ báo một cái lỗi vớ vẩn nào đó, việc của mình là thêm .lean() vào sao tất cả các loại find...() sẽ xong việc
+vd : Order.find().lean().then().......(findDeleted không cần , thêm vào lỗi sml)

@@ -13,22 +13,23 @@ exports.imageFilter = function (req, file, cb) {
 
 exports.paging = function (products, count, page, per_page = 6) {
   page = Number.parseInt(page);
-  products = multipleMongooseToObject(products);
+
+  products = Array.isArray(products) ? products : multipleMongooseToObject(products) ;
   count = Number.parseInt(count);
-  let total_pages = 1;
-  if (count < 6) {
+  let total_pages;
+  if (count < per_page) {
     total_pages = 1;
   } else {
-    if (count % 6 > 0) total_pages = Math.floor(count / 6) + 1;
-    else total_pages = Math.floor(count / 6);
+    if (count % per_page > 0) total_pages = Math.floor(count / per_page) + 1;
+    else total_pages = Math.floor(count / per_page);
   }
 
   let myProduct = {
     page,
-    per_page: 6,
+    per_page,
     total: count,
     total_pages,
-    data: [...products.slice(6 * (page - 1), 6 * (page - 1) + 6)],
+    data: [...products.slice(per_page * (page - 1), per_page * (page - 1) + per_page)],
   };
 
   return myProduct;

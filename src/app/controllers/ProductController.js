@@ -10,7 +10,7 @@ require("dotenv").config();
 class ProductController {
   //[GET] /product/add
   index(req, res, next) {
-    Category.find()
+    Category.find().lean()
       .then((categories) =>
         res.render("products/add", {
           categories: multipleMongooseToObject(categories),
@@ -41,7 +41,7 @@ class ProductController {
   //[GET] /product/edit/:product_id
   editProduct(req, res, next) {
     Promise.all([
-      Product.findOne({ id: req.params.product_id }),
+      Product.findOne({ id: req.params.product_id }).lean(),
       Category.find({}),
     ])
       .then(([product, categories]) =>
@@ -136,7 +136,7 @@ class ProductController {
   }
   //[GET] /product/list?page=x
   listProduct(req, res, next) {
-    Promise.all([Product.find(), Product.count(), Product.countDeleted()])
+    Promise.all([Product.find().lean(), Product.count(), Product.countDeleted()])
       .then(([products, count, countDeleted]) => {
         let myProduct = paging(products, count, req.query.page);
         res.render("products/list", { ...myProduct, countDeleted });
@@ -152,7 +152,7 @@ class ProductController {
     ])
       .then(([products, count]) => {
         let page = Number.parseInt(req.query.page);
-        let productCategory = paging(products, count, page);
+        let productCategory = paging(products, count, page,16);
 
         res.send(productCategory);
       })
@@ -198,8 +198,9 @@ class ProductController {
   searchProduct(req, res, next) {
     Product.find()
       .then((products) => {
-        products = multipleMongooseToObject(products);
-        let searchProducts = products.filter((product) => {
+        console.log(typeof products);
+        let newProducts = multipleMongooseToObject(products);
+        let searchProducts = newProducts.filter((product) => {
           if (
             product.name.toLowerCase().includes(req.query.q.toLowerCase())
           ) {
@@ -209,13 +210,13 @@ class ProductController {
 
         if (req.query.page) {
           let page = Number.parseInt(req.query.page);
-          let searchPage = paging(searchProducts, searchProducts.length, page,12);
+          let searchPage = paging(searchProducts, searchProducts.length, page,16);
           res.send(searchPage);
         } else {
           res.send(searchProducts);
         }
       })
-      .catch((err) => res.send({ err }));
+      .catch((err) => console.log(err));
   }
 }
 
