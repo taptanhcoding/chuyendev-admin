@@ -10,7 +10,7 @@ const { OrderConfirm } = require("../helpers/nodemailer");
 class CartController {
   //[GET] /cart-admin/handleCart?page=1
   listCart(req, res, next) {
-    Promise.all([Orders.find({status: false}), Orders.count({status: false})])
+    Promise.all([Orders.find({status: false}).lean(), Orders.count({status: false})])
       .then(([carts, count]) => {
         let page = req.params.page || 1;
         let pagingCart = paging(carts, count, page);
