@@ -9,9 +9,17 @@ const categoryController = require("../app/controllers/CategoryController");
 
 // customer
 
+route.get("/user/login/:token",(req,res,next) => {
+    req.token = verifyToken(req.params.token)
+    next()
+}, customerController.login);
 route.post("/user/login", customerController.handleLogin);
 
 route.post("/user/signin", customerController.signin);
+route.get("/user/active/:token",(req,res,next) => {
+    req.token = verifyToken(req.params.token)
+    next()
+}, customerController.activeCustomer);
 
 route.put("/user/:user_id/update", customerController.update);
 

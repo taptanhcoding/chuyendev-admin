@@ -1,9 +1,21 @@
-module.exports = function AdminMiddleware(req,res,next) {
-    
-    if(req.body.isLogin) {
-        res.locals.isLogin = req.body.isLogin
-    }
+const Admin = require("../models/Admin");
+const {verifyToken} = require('../middleware/JWTHandle')
 
-    next() 
-    
+module.exports = function CheckLogin(req,res,next) {
+    if(req.cookies.token) {
+        let usernameAdmin = verifyToken(req.cookies.token)
+        Admin.findOne({username : usernameAdmin.username})
+                .then(admin => {
+                    if(admin) {
+                        next()
+                    }
+                    else {
+                        res.render('login', {layout: false})
+                    }
+                })
+                .catch(err => console.log(err))
+    }
+    else {
+        res.render('login', {layout: false})
+    }
 }

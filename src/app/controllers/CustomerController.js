@@ -5,6 +5,8 @@ const {
 const { paging } = require("../helpers/validationImg");
 const Customer = require("../models/Customer");
 const Cart = require("../models/Orders");
+const { createJWT, verifyToken } = require("../middleware/JWTHandle");
+const { SignInConfirm } = require("../helpers/nodemailer");
 
 class CustomerController {
   //[GET] /customer/list?page=x
@@ -39,19 +41,7 @@ class CustomerController {
       .catch((err) => console.log(err));
   }
 
-  //[GET] /customer/active/:customer_id
-  activeCustomer(req, res, next) {
-    Customer.updateOne(
-      { _id: req.params.customer_id },
-      {
-        $set: {
-          active: true,
-        },
-      }
-    )
-      .then(() => res.redirect("back"))
-      .catch((err) => console.log(err));
-  }
+
 
   //[GET] /customer/delete/:customer_id
   handleDelete(req, res, next) {
@@ -75,29 +65,37 @@ class CustomerController {
   }
 
   //api ------------------------------------------------------------------------
-  //[POST] /api/user/login
+  //[GET] /api/user/login
   login(req, res, next) {
-    res.send(req.token);
+    Customer.findOne({_id : req.token._id})
+              .then(customer => {
+                let account = MongooseToObject(customer)
+                delete account.password
+                res.status(200).send(account)
+              })
+              .catch(err => console.log(err))
   }
 
-  //[GET] /api/user/login/:token
+  //[POST] /api/user/login/
   handleLogin(req, res, next) {
-    console.log(req.me);
-    let email = req.me.email;
-    let password = req.me.password;
+    console.log(req.body);
+    let email = req.body.email;
+    let password = req.body.password;
     let customer = {};
 
     Customer.findOne({ $and: [{ email }, { password }] })
       .then(async(customer) => {
         if (customer) {
           let account = MongooseToObject(customer);
+          let token = createJWT({_id: account._id})
+          let warning= account.active? null : 'Vui Lòng Check Mail để xác nhận tài khoản mua hàng'
           Cart.findOne({user_id: account._id})
                 .then(cart => {
                   const accountCart = MongooseToObject(cart)
-                  res.status(200).send({...account,carts: accountCart.carts});
+
+                  res.status(200).send({token,warning,carts: accountCart.carts});
                 })
                 .catch(err => console.log(err))
-                // res.status(200).send(account);
 
         } else {
           res.send({});
@@ -108,19 +106,21 @@ class CustomerController {
 
   //[POST] /api/user/signin
   signin(req, res, next) {
-    Customer.findOne({ email: req.me.email })
+    Customer.findOne({ email: req.body.email })
       .then((customer) => {
         let oldCustomer = MongooseToObject(customer);
         if (oldCustomer) {
           res.send({});
         } else {
-          let email = req.me.email.toLowerCase();
-          const account = { ...req.me, email };
+          let email = req.body.email.toLowerCase();
+          const account = { ...req.body, email };
           const user = new Customer(account);
           user
             .save()
             .then(() => {
-              Customer.findOne({ email: req.me.email })
+              let token = createJWT({email})
+              SignInConfirm({email,token})
+              Customer.findOne({ email: req.body.email })
                         .then(customer => {
                           let newCustomer = MongooseToObject(customer)
                           let newCart = {
@@ -140,10 +140,24 @@ class CustomerController {
       .catch((err) => console.log(err));
   }
 
+    //[GET] /api/user/active/:token
+    activeCustomer(req, res, next) {
+      Customer.updateOne(
+        { email: req.token.email },
+        {
+          $set: {
+            active: true,
+          },
+        }
+      )
+        .then(() => res.status(200).json({status: true,message:'Xác minh thành công !'}))
+        .catch((err) => res.json({status: false,message: 'xác minh thất bại'}));
+    }
+
   // [PUT] /api/user/:user_id/update
   update(req, res, next) {
-    Customer.updateOne({ _id: req.params.user_id }, req.me)
-      .then(() => res.send(req.me))
+    Customer.updateOne({ _id: req.params.user_id }, req.body)
+      .then(() => res.send(req.body))
       .catch((err) => console.log(err));
   }
 

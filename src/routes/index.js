@@ -23,25 +23,12 @@ var AdminMiddleware = require('../app/middleware/admin')
 const { createJWT, verifyToken } = require("../app/middleware/JWTHandle");
 
 function route(app) {
-
-  // app.use("/api",swaggerUi.serve, swaggerUi.setup(swaggerDocument,options), apiRoute);
-  app.use("/api",
-  function (req, res, next) {
-    req.token = createJWT(req.body);
-
-    next();
-  },
-  function (req, res, next) {
-    console.log(req.token);
-    req.me = verifyToken(req.token);
-    next();
-  },apiRoute);
-
-  app.use("/category", categoryRoute);
-  app.use("/product", productRoute);
-  app.use("/customer", customerRoute);
-  app.use("/cart-admin", cartRoute);
-  app.use("/",AdminMiddleware,siteRoute);
+  app.use("/api",apiRoute);
+  app.use("/category",AdminMiddleware,categoryRoute);
+  app.use("/product",AdminMiddleware, productRoute);
+  app.use("/customer",AdminMiddleware, customerRoute);
+  app.use("/cart-admin",AdminMiddleware, cartRoute);
+  app.use("/",siteRoute);
 
 }
 

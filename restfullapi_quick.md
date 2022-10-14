@@ -443,24 +443,39 @@ sử dụng thuật toán Algorithm:
 
 ### sử dụng: 
 folder middleware : 
-jwtHandle.js: 
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
 
-require('dotenv').config()
-const jwt = require('jsonwebtoken')
+const createJWT = (payload) => {
+  let key = process.env.JWT_SECRET;
+  let token = null;
+  try {
+    token = jwt.sign(payload, key);
+  } catch (err) {
+    console.log(err);
+  }
 
-const createJWT = () => {
-        let payload = { email: '16520129chuyen@gmail.com',password : 'Abc@123' }
+  console.log(token);
+  return token;
+}; => hàm sign đăng ký token
+
+const verifyToken = (token) => {
         let key = process.env.JWT_SECRET
-        let token = jwt.sign(payload, key);
-        console.log(token);
-        return token
-}
+        let data = null
+        try {
+                data = jwt.verify(token, key)
+        }
+        catch(err) {
+                console.log(err);
+        }
+        return data
+};=> hàm giải mã token
 
 module.exports = {
-        createJWT
-}
+  createJWT,verifyToken
+};
 
-
+### sử dụng jwt để xác thực người dùng:
 ## validation dữ liệu bằng yup
 cài đặt : npm i yup
 sử dụng const yup = require('yup')
@@ -525,3 +540,16 @@ const OrderConfirm = () => {
 module.exports = {OrderConfirm}
 
 ## sử dụng redis hạn chế số lần request của client
+
+
+## sử dụng cookie parser
+
+cài đặt : npm i --save cookie-parser
+sử dụng : 
+const express = require('express')
+//Sử dụng module cookie-parse
+const cookieParser = require('cookie-parser')
+//Khởi tạo app express mới
+const app = express()
+//Khai báo sử dụng middleware cookieParse()
+app.use(cookieParser())

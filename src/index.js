@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const path = require("path");
 var appRoot = require("app-root-path").path;
 const { engine } = require("express-handlebars");
+const cookieParser = require('cookie-parser')
 const cors = require("cors");
 require('dotenv').config()
 
@@ -59,6 +60,14 @@ app.engine(
         });
         return options;
       },
+      detailOrder(data) {
+        let listProduct =``
+        data.forEach(product => {
+          listProduct += `<li>${product.name}(${product.color})x${product.quanity}(${product.total})</li>`
+        })
+        return `<ul style="list-style:none;padding-left: 0">${listProduct}</ul>`
+
+      }
     },
   })
 );
@@ -77,14 +86,14 @@ app.use(
 
 app.use(methodOverride("_method"));
 app.use(cors());
+app.use(cookieParser())
+
 
 
 app.set("view engine", "hbs");
 app.set("views", path.join(appRoot, "src", "resource", "views"));
 
-app.get('/', (req, res, next) => {
-    res.render('login', {layout: false});
-});
+
 
 
 routes(app);

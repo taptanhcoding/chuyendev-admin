@@ -194,7 +194,7 @@ class ProductController {
   }
 
 
-  //[GET] api/search?q=
+  //[GET] api/search?q=x&page=y
   searchProduct(req, res, next) {
     Product.find()
       .then((products) => {
@@ -209,7 +209,7 @@ class ProductController {
 
         if (req.query.page) {
           let page = Number.parseInt(req.query.page);
-          let searchPage = paging(searchProducts, searchProducts.length, page);
+          let searchPage = paging(searchProducts, searchProducts.length, page,12);
           res.send(searchPage);
         } else {
           res.send(searchProducts);

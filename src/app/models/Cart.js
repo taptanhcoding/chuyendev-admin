@@ -13,7 +13,8 @@ const Cart = new Schema({
     email: {type: String},
     phone: {type: String,require: true},
     detailOrder: {type: Array,require: true},
-    totalPay:{type:String}
+    totalPay:{type:String},
+    status: {type: Boolean,default: false}
 },{
     timestamps:true
 });

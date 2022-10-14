@@ -10,24 +10,26 @@ var transporter = nodemailer.createTransport({
   },
 });
 
-const OrderConfirm = async(data) => {
-    const detaiProduct = () => {
-        let tableProduct =''
-        data.detailOrder.forEach(product => {
-            tableProduct += `<tr>
-            <td><a href="${process.env.URL_REACT}detail/${product.slug}" target="_blank">${product.name} </a></td>
+const OrderConfirm = async (data) => {
+  const detaiProduct = () => {
+    let tableProduct = "";
+    data.detailOrder.forEach((product) => {
+      tableProduct += `<tr>
+            <td><a href="${process.env.URL_REACT}detail/${product.slug}" target="_blank">${product.name}</a> màu: ${product.color}</td>
             <td>${product.price} </td>
             <td>${product.quanity}</td>
             <td>${product.total}</td>
-            </tr>`
-        });
-        return tableProduct
-    }
-    let bodyEmail = `
+            </tr>`;
+    });
+    return tableProduct;
+  };
+  let bodyEmail = `
     <div style="border:8px solid #ef0000;line-height:21px;padding:2px">
         <div style="padding:10px">
                 <strong>Chào ${data.name}</strong>
-                <p>Cảm ơn quý khách đã mua hàng của<a  href="${process.env.URL_REACT}" target="_blank">CHUYENDEV.SITE</a></p>
+                <p>Cảm ơn quý khách đã mua hàng của<a  href="${
+                  process.env.URL_REACT
+                }" target="_blank">CHUYENDEV.SITE</a></p>
         </div>
         <div style="background:none repeat scroll 0 0 #ef0000;color:#ffffff;font-weight:bold;line-height:25px;min-height:27px;padding-left:10px">
         Thông tin đơn hàng  của quý khách
@@ -94,27 +96,24 @@ const OrderConfirm = async(data) => {
         </div>
         <div style="padding: 10px">
             <p>
-            <a  href="${process.env.URL_REACT}" target="_blank">CHUYENDEV.SITE</a> sẽ liên lạc với quý khách và xác nhận lại đơn hàng trong thời gian sớm nhất.<br>Cảm ơn quý khách
+            <a  href="${
+              process.env.URL_REACT
+            }" target="_blank">CHUYENDEV.SITE</a> sẽ liên lạc với quý khách và xác nhận lại đơn hàng trong thời gian sớm nhất.<br>Cảm ơn quý khách
             </p>
         </div>
     </div>
-    `
-
-
-
-
-
+    `;
 
   var mainOptions = {
     // thiết lập đối tượng, nội dung gửi mail
     from: "Chuyendev Shop",
-    to:data.email,
+    to: data.email,
     subject: "Chuyendev-Xác nhận đơn hàng",
     text: "",
     html: bodyEmail,
   };
 
-   await transporter.sendMail(mainOptions, function (err, info) {
+  await transporter.sendMail(mainOptions, function (err, info) {
     if (err) {
       console.log(err);
     } else {
@@ -123,4 +122,38 @@ const OrderConfirm = async(data) => {
   });
 };
 
-module.exports = { OrderConfirm };
+const SignInConfirm = async (data) => {
+  let bodyEmail = `
+    <div style="border:8px solid #ef0000;line-height:21px;padding:2px">
+        <div style="padding:10px">
+                <strong>Chào ${data.name}</strong>
+                <p>Cảm ơn quý khách đã đăng ký tài khoản tại <a  href="${process.env.URL_REACT}" target="_blank">CHUYENDEV.SITE</a></p>
+        </div>
+        <div style="background:none repeat scroll 0 0 #ef0000;color:#ffffff;font-weight:bold;line-height:25px;min-height:27px;padding-left:10px">
+        Xác nhận của quý khách
+        </div>
+        <div  style="padding:10px">
+         Bấm vào <a  href="${process.env.URL_REACT}verification/${data.token}" target="_blank">Đây</a> để xác minh tài khoản
+        </div>
+    </div>
+    `;
+
+  var mainOptions = {
+    // thiết lập đối tượng, nội dung gửi mail
+    from: "Chuyendev Shop",
+    to: data.email,
+    subject: "Chuyendev-Xác minh tài khoản",
+    text: "",
+    html: bodyEmail,
+  };
+
+  await transporter.sendMail(mainOptions, function (err, info) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Message sent: " + info.response);
+    }
+  });
+};
+
+module.exports = { OrderConfirm,SignInConfirm };

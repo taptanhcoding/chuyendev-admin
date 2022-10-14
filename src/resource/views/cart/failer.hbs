@@ -1,5 +1,5 @@
 <div>
-  <h1>Quản lý đặt hàng</h1>
+  <h1>Quản lý hủy đơn</h1>
   <table class="table">
     <thead>
       <tr>
@@ -21,19 +21,19 @@
             <a
               type="button"
               class="btn btn-danger"
-              href="/cart-admin/cancelCart/{{this.order_id}}"
-            >Hủy</a>
+              href=""
+            >Xóa</a>
             <a
               type="button"
               class="btn btn-info"
-              href="/cart-admin/accessCart/{{this.order_id}}"
-            >Chấp nhận</a>
+              href=""
+            >Khôi phục</a>
           </td>
         </tr>
         {{else}}
-        <tr><td colspan="4" class="text-center"> Chưa có đơn hàng nào đã được đặt!</td></tr>
+        <tr><td colspan="4" class="text-center"> Chưa có đơn hàng nào bị hủy!</td></tr>
       {{/each}}
     </tbody>
   </table>
-  {{{paging total_pages "/cart-admin/handleCart"}}}
+  {{{paging total_pages "/cart-admin/listFailer"}}}
 </div>
