@@ -81,7 +81,7 @@ class CategoryController {
     Category.findOne({ slug: req.params.slug })
       .lean()
       .then((category) =>
-        res.render("categorys/list", {
+        res.render("categorys/editCategory", {
           category,
         })
       );
