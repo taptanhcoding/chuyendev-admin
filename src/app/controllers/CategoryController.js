@@ -70,21 +70,21 @@ class CategoryController {
       })
       .then(() => {
         Category.deleteOne({ slug: req.params.slug })
-      .then(() => res.redirect("back"))
-      .catch((err) => console.log(err));
+          .then(() => res.redirect("back"))
+          .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
-    
   }
 
   //[GET] /category/edit/:slug
   editCategory(req, res, next) {
-    Category.findOne({ slug: req.params.slug }).lean().then((category) =>
-    {console.log(category);
-      res.render("categorys/editCategory", {
-        category
-      })}
-    );
+    Category.findOne({ slug: req.params.slug })
+      .lean()
+      .then((category) =>
+        res.render("categorys/list", {
+          category,
+        })
+      );
   }
 
   //[PUT] /category/edit/:slug
