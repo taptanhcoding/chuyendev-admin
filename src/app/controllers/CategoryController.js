@@ -79,7 +79,7 @@ class CategoryController {
 
   //[GET] /category/edit/:slug
   editCategory(req, res, next) {
-    Category.findOne({ slug: req.params.slug }).then((category) =>
+    Category.findOne({ slug: req.params.slug }).lean().then((category) =>
       res.render("categorys/editCategory", {
         category: MongooseToObject(category),
       })
