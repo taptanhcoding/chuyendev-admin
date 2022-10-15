@@ -82,7 +82,7 @@ class CategoryController {
     Category.findOne({ slug: req.params.slug }).lean().then((category) =>
     {console.log(category);
       res.render("categorys/editCategory", {
-        category: MongooseToObject(category),
+        category
       })}
     );
   }
