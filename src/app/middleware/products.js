@@ -2,6 +2,7 @@
 const path = require('path')
 const sourcePath = require('app-root-path').path
 const multer = require('multer')
+console.log(sourcePath);
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
