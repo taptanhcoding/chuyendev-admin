@@ -95,7 +95,7 @@ class CategoryController {
     categoryData.name = req.body.name;
 
     if (req.file) {
-      categoryData.icon = host + "img/category/" + req.file.filename;
+      categoryData.icon = "https://raw.githubusercontent.com/taptanhcoding/chuyendev-admin/main/src/public/" + "img/category/" + req.file.filename;
     } else {
       categoryData.icon = req.body.old_icon;
     }
