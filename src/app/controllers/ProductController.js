@@ -60,7 +60,7 @@ class ProductController {
 
     if (req.files.length > 0) {
       Array.from(req.files).forEach((file) => {
-        image = [...image, `${host}img/products/${file.filename}`];
+        image = [...image, `https://raw.githubusercontent.com/taptanhcoding/chuyendev-admin/main/src/public/img/products/${file.filename}`];
       });
       req.body.image = image;
       delete req.body.old_image;
@@ -164,6 +164,7 @@ class ProductController {
   //[GET] api/api-product/sale/:category
   saleProducts(req, res, next) {
     Product.find({ categories: req.params.category })
+      .sort({createdAt: 'desc'})
       .limit(8)
       .then((products) => {
         let productCategory = multipleMongooseToObject(products);

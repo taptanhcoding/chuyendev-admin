@@ -19,7 +19,7 @@ class CategoryController {
     const host = process.env.URL_NODE_PUBLIC || process.env.URL_NODE_DEV;
     const categoryData = {};
     categoryData.name = req.body.name;
-    categoryData.icon = host + "img/category/" + req.file.filename;
+    categoryData.icon = "https://raw.githubusercontent.com/taptanhcoding/chuyendev-admin/main/src/public/" + "img/category/" + req.file.filename;
 
     const category = new Category(categoryData);
 
